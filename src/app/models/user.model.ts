@@ -2,6 +2,7 @@ import { Model, model, Schema } from "mongoose";
 import { IAddress, IUser, UserInstanceMethods, UserStaticMethods } from "../interfaces/user.interface";
 import validator from "validator";
 import bcrypt from "bcryptjs";
+import { Note } from "./notes.model";
 
 
 const addressSchema = new Schema<IAddress>({
@@ -86,18 +87,45 @@ userSchema.static("hashPassword", async function (plainPassword: string) {
     return password;
 });
 
+
+// Pre Hooks
+
+// Document Middleware 
+
 userSchema.pre("save", async function (next) {
     // if (this.isModified("password")) {
     //     const password = await bcrypt.hash(this.password, 10);
     //     this.password = password;
     // }
-    // next();
     this.password = await bcrypt.hash(this.password, 10);
+    next();
 });
 
+// Query Middleware
+
+userSchema.pre("find", function (next) {
+    // console.log("Query Middleware called");
+    console.log("inside pre find hook");
+    next();
+});
+
+
+// Post Hooks
+// Document Middleware
 userSchema.post("save", function (doc, next) {
     console.log(`%s{doc.email} created successfully`, doc._id);
+    next();
 });
+
+userSchema.post("findOneAndUpdate", async function (doc, next) {
+    if (doc) {
+        console.log(doc);
+        await Note.deleteMany({ user: doc._id });
+    }
+    next();
+});
+
+
 
 // export const User = model("User", userSchema);
 export const User = model<IUser, UserStaticMethods>("User", userSchema);

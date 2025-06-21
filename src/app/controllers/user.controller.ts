@@ -37,7 +37,7 @@ usersRoutes.post('/create', async (req: Request, res: Response) => {
         // const password = await bcrypt.hash(body.password, 10)
         // console.log(password);
         // body.password = password
-        
+
 
         // const body = req.body;
         // const password = await bcrypt.hash(body.password, 10);
@@ -105,8 +105,9 @@ usersRoutes.patch('/:userId', async (req: Request, res: Response) => {
 
 usersRoutes.delete('/:userId', async (req: Request, res: Response) => {
     const userId = req.params.userId;
-    const user = await User.findByIdAndDelete(userId);
+    // const user = await User.findByIdAndDelete(userId);
 
+    const user = await User.findOneAndDelete({ _id: userId }, { new: true });
 
     res.status(201).json({
         success: true,
