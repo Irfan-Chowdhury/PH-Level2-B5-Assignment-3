@@ -27,6 +27,7 @@ or issue found: install globally : npm i -g typescript
     ```
     in terminal : `npm run dev`
 
+<!-- From Advance -->
 12. Validator :
 
 ```bash
@@ -34,6 +35,20 @@ npm i validator
 ``` 
 
 Visit : [https://www.npmjs.com/package/validator](https://www.npmjs.com/package/validator)
+
+```bash
+npm i --save @types/validator
+```
+
+13. Zod 
+
+```bash
+npm install zod
+```
+
+Visit : [https://zod.dev/](https://zod.dev/)
+
+
 
 <br>
 
