@@ -1,8 +1,10 @@
 import express, { Request, Response } from "express"
 import { User } from "../models/user.model"
 import { z } from "zod";
+import bcrypt from "bcryptjs";
 
 export const usersRoutes = express.Router();
+
 
 const CreateUserZodSchema = z.object(
     {
@@ -26,6 +28,8 @@ usersRoutes.get('/', async (req: Request, res: Response) => {
 });
 
 usersRoutes.post('/create', async (req: Request, res: Response) => {
+
+
 
     try {
 
@@ -59,6 +63,10 @@ usersRoutes.post('/create', async (req: Request, res: Response) => {
 
 
         const body = req.body;
+
+        const password = await bcrypt.hash(body.password, 10);
+        // console.log(password, "hashed password");
+        body.password = password;
 
         const user = await User.create(body);
 

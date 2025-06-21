@@ -49,6 +49,13 @@ npm install zod
 Visit : [https://zod.dev/](https://zod.dev/)
 
 
+14. Password Hash
+
+```bash
+npm i bcryptjs
+```
+
+Visit : [https://www.npmjs.com/package/bcryptjs](https://www.npmjs.com/package/bcryptjs)
 
 <br>
 
