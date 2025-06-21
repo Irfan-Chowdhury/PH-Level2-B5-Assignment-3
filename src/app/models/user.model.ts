@@ -86,5 +86,18 @@ userSchema.static("hashPassword", async function (plainPassword: string) {
     return password;
 });
 
+userSchema.pre("save", async function (next) {
+    // if (this.isModified("password")) {
+    //     const password = await bcrypt.hash(this.password, 10);
+    //     this.password = password;
+    // }
+    // next();
+    this.password = await bcrypt.hash(this.password, 10);
+});
+
+userSchema.post("save", function (doc, next) {
+    console.log(`%s{doc.email} created successfully`, doc._id);
+});
+
 // export const User = model("User", userSchema);
 export const User = model<IUser, UserStaticMethods>("User", userSchema);
