@@ -27,6 +27,15 @@ or issue found: install globally : npm i -g typescript
     ```
     in terminal : `npm run dev`
 
+12. Validator :
+
+```bash
+npm i validator
+``` 
+
+Visit : [https://www.npmjs.com/package/validator](https://www.npmjs.com/package/validator)
+
+<br>
 
 Basic File Structure:
 # server.ts : 
