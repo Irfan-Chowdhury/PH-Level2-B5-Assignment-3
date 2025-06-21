@@ -34,43 +34,33 @@ usersRoutes.post('/create', async (req: Request, res: Response) => {
     try {
         // const body = await CreateUserZodSchema.parseAsync(req.body)
         // console.log(body, "zod body");
-
         // const password = await bcrypt.hash(body.password, 10)
         // console.log(password);
-
         // body.password = password
-
-
-
-        //Built it and custom instance methods
-
-        // const user = new User(body)
-
-        // const password = await user.hashPassword(body.password)
-
-        // user.password = password
-
-        // await user.save()
-
-        // built in and custom static methods
-
-        // const password = await User.hashPassword(body.password)
-        // console.log(password, "static");
-
-        // body.password = password
-
+        
 
         // const body = req.body;
-
         // const password = await bcrypt.hash(body.password, 10);
         // console.log(password, "hashed password");
         // body.password = password;
 
+
+
+        //*** Built in and custom instance methods ***
+        // const body = req.body;
+        // const user = new User(body)
+        // const password = await user.hashPassword(body.password)
+        // user.password = password
+        // await user.save()
+
+
+        // *** Built in and custom static methods ****
         const body = req.body;
+        const password = await User.hashPassword(body.password)
+        body.password = password
         const user = await User.create(body);
-        const password = await user.hashPassword(body.password);
-        user.password = password;
-        await user.save();
+
+
 
         res.status(201).json({
             success: true,
@@ -124,3 +114,26 @@ usersRoutes.delete('/:userId', async (req: Request, res: Response) => {
         user
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // *** Built in custom Instance Methods ***
+        // const body = req.body;
+        // const user = await User.create(body);
+        // const password = await user.hashPassword(body.password);
+        // user.password = password;
+        // await user.save();
