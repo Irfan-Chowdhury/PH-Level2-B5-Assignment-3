@@ -355,3 +355,22 @@ Press `Ctrl + O`, then `Enter`, then `Ctrl + X`
 
 
 
+<!-- -------------- deployment---------------------------- -->
+1. vercel
+2. npm run build
+3. npm i -g vercel
+4. check install or not : vercel -v
+5. login : vercel login
+6. vercel --prod
+
+```bash
+Vercel CLI 43.3.0
+? Set up and deploy “/var/www/html/Next Web Devleopment/Mission-3/Module-19/assignment-3”? yes
+? Which scope should contain your project? irfanchowdhury's projects
+? Link to existing project? no
+? What’s your project’s name? library-management-backend-node
+? In which directory is your code located? ./
+🔗  Linked to irfanchowdhurys-projects/library-management-backend-node (created .vercel and added it to .gitignore)
+🔍  Inspect: https://vercel.com/irfanchowdhurys-projects/library-management-backend-node/Co6BvhtMbNo1YBrSJ8AotnpMrRxc 
+Production: https://library-management-backend-node-qmkmsp9bo.vercel.app
+```
