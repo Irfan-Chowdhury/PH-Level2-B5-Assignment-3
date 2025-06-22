@@ -6,13 +6,15 @@ import { borrowRoutes } from "./app/controllers/borrow.controller";
 import { errorHandler } from "./app/middlewares/errorHandler";
 
 
+
+
 const app: Application = express();
 
 app.use(express.json());
 
 
 app.get('/api', (req : Request, res : Response) => {
-    res.send('Welcome to note app');
+    res.send('Welcome to Library Management System API');
 });
 
 app.use("/notes", notesRoutes);
