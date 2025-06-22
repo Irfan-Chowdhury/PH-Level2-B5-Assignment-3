@@ -6,7 +6,20 @@ export const bookRoutes = express.Router()
 
 
 bookRoutes.get('/', async (req: Request, res: Response) => {
-    const books = await Book.find();
+    // const books = await Book.find();
+
+    const { filter, sortBy = "createdAt", sort = "desc", limit = "10" } = req.query;
+    const query: any = {};
+    if (filter) {
+      query.genre = filter;
+    }
+
+    const sortOption: any = {};
+    sortOption[sortBy as string] = sort === "asc" ? 1 : -1;
+
+    const books = await Book.find(query)
+                            .sort(sortOption)
+                            .limit(parseInt(limit as string));
 
     res.status(201).json({
         success: true,
@@ -17,14 +30,22 @@ bookRoutes.get('/', async (req: Request, res: Response) => {
 
 
 bookRoutes.post('/create', async (req: Request, res: Response) => {
-    const body = req.body;
-    const book = await Book.create(body)
+    try {
+        const body = req.body;
+        const book = await Book.create(body)
 
-    res.status(201).json({
-        success: true,
-        message: "Book created successfully",
-        data : book
-    });
+        res.status(201).json({
+            success: true,
+            message: "Book created successfully",
+            data : book
+        });
+        
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: (error as Error).message
+        });
+    }
 });
 
 bookRoutes.get('/:bookId', async (req: Request, res: Response) => {
