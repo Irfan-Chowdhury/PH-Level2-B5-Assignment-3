@@ -10,7 +10,8 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use("/notes", notes_controller_1.notesRoutes);
 app.use("/users", user_controller_1.usersRoutes);
-app.get('/', (req, res) => {
+app.use("/api/books", user_controller_1.usersRoutes);
+app.get('api/', (req, res) => {
     res.send('Welcome to note app');
 });
 exports.default = app;
