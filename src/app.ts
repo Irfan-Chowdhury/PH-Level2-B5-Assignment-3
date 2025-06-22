@@ -3,6 +3,7 @@ import { notesRoutes } from "./app/controllers/notes.controller";
 import { usersRoutes } from "./app/controllers/user.controller";
 import { bookRoutes } from "./app/controllers/book.controller";
 import { borrowRoutes } from "./app/controllers/borrow.controller";
+import { errorHandler } from "./app/middlewares/errorHandler";
 
 
 const app: Application = express();
@@ -19,6 +20,9 @@ app.use("/users", usersRoutes);
 
 app.use("/api/books", bookRoutes);
 app.use("/api/borrow", borrowRoutes);
+
+// Global Error Handler
+app.use(errorHandler);
 
 
 export default app;

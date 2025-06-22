@@ -7,7 +7,7 @@ export const borrowRoutes = express.Router()
 
 
 borrowRoutes.post('/', async (req: Request, res: Response) => {
-    try {
+    // try {
         const { book, quantity, dueDate } = req.body;
          
         if (!Types.ObjectId.isValid(book)) {
@@ -35,17 +35,12 @@ borrowRoutes.post('/', async (req: Request, res: Response) => {
             data: borrow,
         });
 
-    } catch (error) {
-        // console.error("Error in borrow route:", error);
-        // res.status(500).json({
-        //     success: false,
-        //     message: "Something went wrong",
-        // });
-        res.status(500).json({
-            success: false,
-            message: (error as Error).message
-        });
-    }
+    // } catch (error) {
+    //     res.status(500).json({
+    //         success: false,
+    //         message: (error as Error).message
+    //     });
+    // }
 });
 
 
