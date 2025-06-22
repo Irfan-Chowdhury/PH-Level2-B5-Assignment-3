@@ -1,6 +1,4 @@
 import express, { Application, Request, Response  } from "express";
-import { notesRoutes } from "./app/controllers/notes.controller";
-import { usersRoutes } from "./app/controllers/user.controller";
 import { bookRoutes } from "./app/controllers/book.controller";
 import { borrowRoutes } from "./app/controllers/borrow.controller";
 import { errorHandler } from "./app/middlewares/errorHandler";
@@ -13,12 +11,9 @@ const app: Application = express();
 app.use(express.json());
 
 
-app.get('/api', (req : Request, res : Response) => {
+app.get('/', (req : Request, res : Response) => {
     res.send('Welcome to Library Management System API');
 });
-
-app.use("/notes", notesRoutes);
-app.use("/users", usersRoutes);
 
 app.use("/api/books", bookRoutes);
 app.use("/api/borrow", borrowRoutes);
