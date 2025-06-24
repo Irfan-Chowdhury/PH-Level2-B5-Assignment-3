@@ -29,8 +29,8 @@ bookRoutes.get('/', async (req: Request, res: Response) => {
 });
 
 
-bookRoutes.post('/create', async (req: Request, res: Response) => {
-    try {
+bookRoutes.post('/', async (req: Request, res: Response) => {
+    // try {
         const body = req.body;
         const book = await Book.create(body)
 
@@ -40,12 +40,12 @@ bookRoutes.post('/create', async (req: Request, res: Response) => {
             data : book
         });
         
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: (error as Error).message
-        });
-    }
+    // } catch (error) {
+    //     res.status(500).json({
+    //         success: false,
+    //         message: (error as Error).message
+    //     });
+    // }
 });
 
 bookRoutes.get('/:bookId', async (req: Request, res: Response) => {
@@ -60,7 +60,7 @@ bookRoutes.get('/:bookId', async (req: Request, res: Response) => {
 });
 
 
-bookRoutes.patch('/:bookId', async (req: Request, res: Response) => {
+bookRoutes.put('/:bookId', async (req: Request, res: Response) => {
     const bookId = req.params.bookId;
     const updatedBody = req.body;
     const book = await Book.findByIdAndUpdate(bookId, updatedBody, { new: true });

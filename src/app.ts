@@ -16,6 +16,7 @@ app.get('/', (req : Request, res : Response) => {
 });
 
 app.use("/api/books", bookRoutes);
+
 app.use("/api/borrow", borrowRoutes);
 
 // Global Error Handler
