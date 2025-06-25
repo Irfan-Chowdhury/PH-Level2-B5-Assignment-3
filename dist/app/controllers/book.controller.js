@@ -25,22 +25,21 @@ exports.bookRoutes.get('/', async (req, res) => {
         data: books
     });
 });
-exports.bookRoutes.post('/create', async (req, res) => {
-    try {
-        const body = req.body;
-        const book = await book_model_1.Book.create(body);
-        res.status(201).json({
-            success: true,
-            message: "Book created successfully",
-            data: book
-        });
-    }
-    catch (error) {
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
-    }
+exports.bookRoutes.post('/', async (req, res) => {
+    // try {
+    const body = req.body;
+    const book = await book_model_1.Book.create(body);
+    res.status(201).json({
+        success: true,
+        message: "Book created successfully",
+        data: book
+    });
+    // } catch (error) {
+    //     res.status(500).json({
+    //         success: false,
+    //         message: (error as Error).message
+    //     });
+    // }
 });
 exports.bookRoutes.get('/:bookId', async (req, res) => {
     const bookId = req.params.bookId;
@@ -51,7 +50,7 @@ exports.bookRoutes.get('/:bookId', async (req, res) => {
         data: book
     });
 });
-exports.bookRoutes.patch('/:bookId', async (req, res) => {
+exports.bookRoutes.put('/:bookId', async (req, res) => {
     const bookId = req.params.bookId;
     const updatedBody = req.body;
     const book = await book_model_1.Book.findByIdAndUpdate(bookId, updatedBody, { new: true });
