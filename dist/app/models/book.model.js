@@ -50,5 +50,4 @@ bookSchema.methods.decreaseCopies = async function (quantity) {
     }
     return this.save();
 };
-// export const Book = model<IBook>("Book", bookSchema);
 exports.Book = (0, mongoose_1.model)("Book", bookSchema);

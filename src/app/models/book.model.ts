@@ -61,6 +61,4 @@ bookSchema.methods.decreaseCopies = async function (quantity: number) {
   return this.save();
 };
 
-// export const Book = model<IBook>("Book", bookSchema);
-
 export const Book = model<BookDocument>("Book", bookSchema);

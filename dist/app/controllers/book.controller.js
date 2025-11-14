@@ -8,25 +8,36 @@ const express_1 = __importDefault(require("express"));
 const book_model_1 = require("../models/book.model");
 exports.bookRoutes = express_1.default.Router();
 exports.bookRoutes.get('/', async (req, res) => {
-    // const books = await Book.find();
-    const { filter, sortBy = "createdAt", sort = "desc", limit = "10" } = req.query;
+    const { filter, sortBy = "createdAt", sort = "desc", page = "1", limit = "10" } = req.query;
     const query = {};
     if (filter) {
         query.genre = filter;
     }
     const sortOption = {};
     sortOption[sortBy] = sort === "asc" ? 1 : -1;
+    const pageNumber = parseInt(page);
+    const limitNumber = parseInt(limit);
+    const skip = (pageNumber - 1) * limitNumber;
+    // Main query
     const books = await book_model_1.Book.find(query)
         .sort(sortOption)
-        .limit(parseInt(limit));
-    res.status(201).json({
+        .skip(skip)
+        .limit(limitNumber);
+    // Count total for pagination
+    const totalBooks = await book_model_1.Book.countDocuments(query);
+    res.status(200).json({
         success: true,
-        message: "Book retrieved successfuly",
-        data: books
+        message: "Books retrieved successfully",
+        data: books,
+        pagination: {
+            total: totalBooks,
+            page: pageNumber,
+            limit: limitNumber,
+            totalPages: Math.ceil(totalBooks / limitNumber),
+        },
     });
 });
 exports.bookRoutes.post('/', async (req, res) => {
-    // try {
     const body = req.body;
     const book = await book_model_1.Book.create(body);
     res.status(201).json({
@@ -34,12 +45,6 @@ exports.bookRoutes.post('/', async (req, res) => {
         message: "Book created successfully",
         data: book
     });
-    // } catch (error) {
-    //     res.status(500).json({
-    //         success: false,
-    //         message: (error as Error).message
-    //     });
-    // }
 });
 exports.bookRoutes.get('/:bookId', async (req, res) => {
     const bookId = req.params.bookId;
@@ -56,16 +61,25 @@ exports.bookRoutes.put('/:bookId', async (req, res) => {
     const book = await book_model_1.Book.findByIdAndUpdate(bookId, updatedBody, { new: true });
     res.status(201).json({
         success: true,
-        message: "Book updated successfuly",
+        message: "Book updated successfully",
         data: book
     });
 });
-exports.bookRoutes.delete('/:noteId', async (req, res) => {
-    const bookId = req.params.bookId;
-    const book = await book_model_1.Book.findByIdAndDelete(bookId);
-    res.status(201).json({
-        success: true,
-        message: "Book deleted successfuly",
-        data: book
-    });
+exports.bookRoutes.delete('/:bookId', async (req, res) => {
+    try {
+        const bookId = req.params.bookId;
+        const book = await book_model_1.Book.findByIdAndDelete(bookId);
+        res.status(201).json({
+            success: true,
+            message: "Book deleted successfully",
+            data: book
+        });
+    }
+    catch (err) {
+        console.error("Delete error:", err);
+        res.status(500).json({
+            success: false,
+            message: "Internal server error",
+        });
+    }
 });

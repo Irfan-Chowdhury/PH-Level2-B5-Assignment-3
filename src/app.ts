@@ -9,12 +9,25 @@ import cors from 'cors';
 
 const app: Application = express();
 
-app.use(
-  cors({
 
-    origin: ['http://localhost:5173']
-   })
-);
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://library-management-frontend-eta-umber.vercel.app"
+];
+
+app.use(cors({
+  // origin: "*",
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+}));
+
+// app.options('*', cors());
 
 app.use(express.json());
 

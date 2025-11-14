@@ -9,9 +9,23 @@ const borrow_controller_1 = require("./app/controllers/borrow.controller");
 const errorHandler_1 = require("./app/middlewares/errorHandler");
 const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
+const allowedOrigins = [
+    "http://localhost:3000",
+    "https://library-management-frontend-eta-umber.vercel.app"
+];
 app.use((0, cors_1.default)({
-    origin: ['http://localhost:5173']
+    // origin: "*",
+    origin: (origin, callback) => {
+        if (!origin || allowedOrigins.includes(origin)) {
+            callback(null, true);
+        }
+        else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
 }));
+// app.options('*', cors());
 app.use(express_1.default.json());
 app.get('/', (req, res) => {
     res.send('Welcome to Library Management System API');
